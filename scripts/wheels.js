@@ -1,31 +1,23 @@
-import { setWheelId } from "./transientstate.js"
+import { getWheels, setWheel } from "./database.js"
 
-const handleWheelChoice = (changeEvent) => {
-    if(changeEvent.target.id === "wheels") {
-        const chosenOption = parseInt(changeEvent.target.value)
-        setWheelId(chosenOption)
+document.addEventListener("change", clickEvent => {
+    if (clickEvent.target.id === "wheel") {
+        setWheel(parseInt(clickEvent.target.value))
     }
-}
+})
 
-export const wheelOptions = async () => {
-    const response = await fetch("http://localhost:8088/wheels")
-    const wheelsOpts = await response.json()
+const wheels = await getWheels()
 
-    document.addEventListener("change", handleWheelChoice)
-
-    let wheelHTML = `<select id='wheels'>
-    <option type='radio' name='wheel' value='' selected disabled hidden/> Wheels
-    `
-
-    const divStringArray = wheelsOpts.map(
-        (wheel) => {
-            return `<div>
-            <option value='${wheel.id}'>${wheel.type}</option>
-            </div>`
+export const Wheels = () => {
+    return `<h2>Wheels</h2>
+    <select id="wheel">
+        <option value="0">Select an wheel style</option>
+        ${
+            wheels.map(
+                (wheel) => {
+                    return `<option value="${wheel.id}">${wheel.style}</option>`
+                }
+            ).join("")
         }
-    )
-
-    wheelHTML += divStringArray.join("")
-    wheelHTML += "</select>"
-    return wheelHTML
-}   
+    </select>`
+}
