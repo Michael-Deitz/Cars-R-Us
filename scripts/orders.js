@@ -1,4 +1,4 @@
-import { getWheels, getInteriors, getTechnologies, getPaints, getOrders } from "./database.js"
+import { getWheels, getInteriors, getTechnologies, getPaints, getOrders, completeOrder } from "./database.js"
 
 
 const paints = await getPaints()
@@ -6,9 +6,16 @@ const interiors = await getInteriors()
 const techs = await getTechnologies()
 const wheels = await getWheels()
 
+document.addEventListener("click", (event) => {
+    const { name, id } = event.target;
+    if (name === "complete") {
+      completeOrder(id);
+    }
+  });
 
 export const Orders = async() => {
     const orders = await getOrders()
+    
 
     return `${
         orders.map(order => {
@@ -33,10 +40,5 @@ export const Orders = async() => {
     
 }
 
-document.addEventListener("click", (event) => {
-    const { name, id } = event.target;
-    if (name === "complete") {
-      completeOrder(id);
-    }
-  });
+
 

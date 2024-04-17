@@ -75,8 +75,8 @@ export const addCustomOrder = async () => {
     document.dispatchEvent(new CustomEvent("stateChanged"))
 }
 
-export const completeOrder = async (orderId) => {
-    await fetch(`https://localhost:7034/orders/${orderId}/fulfill`, {
+export const completeOrder = async (Id) => {
+    await fetch(`https://localhost:7034/orders/${Id}/fulfill`, {
       method: "POST",
     });
     document.dispatchEvent(new CustomEvent("stateChanged"));
